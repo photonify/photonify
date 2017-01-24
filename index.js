@@ -2,6 +2,7 @@ const fs = require("fs");
 const im = require("imagemagick");
 const path = require("path");
 const async = require("async");
+const slug = require("slug");
 
 const helpers = require("./helpers");
 
@@ -12,7 +13,7 @@ controller.resize = (settings, callback) => {
         const extension = helpers.getExtension(features.format);
 
         const sizes = ["1024x768", "640x480", "160x144"];
-        
+
         const fileSuffixes = ["-large", "-medium", "-small"];
 
         let ops = [];
@@ -24,7 +25,14 @@ controller.resize = (settings, callback) => {
                     width: size.split("x")[0],
                     height: size.split("x")[1]
                 }, (err, stdout, stderr) => {
-                    fs.writeFileSync(path.join(settings.dest, settings.fileName + fileSuffixes[index] + (extension || ".jpg")), stdout, 'binary');
+                    fs.writeFileSync(
+                        path.join(
+                            settings.dest,
+                            slug(settings.fileName) + fileSuffixes[index] + (extension || ".jpg")
+                        ),
+                        stdout,
+                        "binary"
+                    );
 
                     cb();
                 });
