@@ -2,21 +2,18 @@ const fs = require("fs");
 const im = require("imagemagick");
 const path = require("path");
 const async = require("async");
-const slug = require("slug");
 
 const helpers = require("./helpers");
+const s3Service = require("./s3_service");
 
 let controller = {};
 
 controller.resize = (settings, callback) => {
     im.identify({data: settings.data}, (err, features) => {
-        const extension = helpers.getExtension(features.format);
-
-        const sizes = ["1024x768", "640x480", "160x144"];
-
-        const fileSuffixes = ["-large", "-medium", "-small"];
+        const sizes = settings.sizes || ["1024x768", "640x480", "160x144"];
 
         let ops = [];
+        let images = [];
 
         sizes.forEach((size, index) => {
             ops.push((cb) => {
@@ -25,22 +22,36 @@ controller.resize = (settings, callback) => {
                     width: size.split("x")[0],
                     height: size.split("x")[1]
                 }, (err, stdout, stderr) => {
-                    fs.writeFileSync(
-                        path.join(
-                            settings.dest,
-                            slug(settings.fileName) + fileSuffixes[index] + (extension || ".jpg")
-                        ),
-                        stdout,
-                        "binary"
-                    );
+                    const newFilename = helpers.generateFileName(settings, features, index);
 
-                    cb();
+                    if (settings.storage === "filesystem" || !settings.storage) {
+                        fs.writeFileSync(
+                            path.join(
+                                settings.dest,
+                                newFilename
+                            ),
+                            stdout,
+                            "binary"
+                        );
+
+                        images.push(newFilename);
+
+                        cb();
+                    } else {
+                        s3Service.upload({
+                            data: new Buffer(stdout, "binary"),
+                            fileName: newFilename
+                        }, (err, imageUrl) => {
+                            images.push(imageUrl);
+                            cb();
+                        });
+                    }
                 });
             });
         });
 
         async.parallel(ops, () => {
-            callback();
+            callback(images);
         });
     });
 }
