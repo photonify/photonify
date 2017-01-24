@@ -9,8 +9,9 @@
   "author": "Arun Sood",
   "license": "MIT",
   "dependencies": {
+    "async": "^2.1.4",
     "aws-sdk": "^2.7.27",
-    "express-fileupload": "0.0.6",
+    "fs": "0.0.1-security",
     "imagemagick": "^0.1.3"
   }
 }
