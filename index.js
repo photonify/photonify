@@ -8,7 +8,7 @@ const s3Service = require("./s3_service");
 
 let controller = {};
 
-controller.resize = (settings, callback) => {
+controller.process = (settings, callback) => {
     im.identify({data: settings.data}, (err, features) => {
         const sizes = settings.sizes || ["1024x768", "640x480", "160x144"];
 
