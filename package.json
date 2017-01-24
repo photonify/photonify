@@ -1,6 +1,6 @@
 {
   "name": "photonify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Photonify is a utility to manage multipart image uploads and automatically process them with Imagemagick.",
   "main": "index.js",
   "scripts": {
