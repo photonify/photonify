@@ -12,8 +12,10 @@ controller.resize = (settings, callback) => {
     im.identify({data: settings.data}, (err, features) => {
         const sizes = settings.sizes || ["1024x768", "640x480", "160x144"];
 
+        const aliases = ["large", "medium", "small"];
+
         let ops = [];
-        let images = [];
+        let images = {};
 
         sizes.forEach((size, index) => {
             ops.push((cb) => {
@@ -34,7 +36,7 @@ controller.resize = (settings, callback) => {
                             "binary"
                         );
 
-                        images.push(newFilename);
+                        images[aliases[index]] = newFilename;
 
                         cb();
                     } else {
@@ -42,7 +44,7 @@ controller.resize = (settings, callback) => {
                             data: new Buffer(stdout, "binary"),
                             fileName: newFilename
                         }, (err, imageUrl) => {
-                            images.push(imageUrl);
+                            images[aliases[index]] = imageUrl;
                             cb();
                         });
                     }
