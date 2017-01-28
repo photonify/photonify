@@ -5,6 +5,7 @@ const async = require("async");
 
 const helpers = require("./helpers");
 const s3Service = require("./s3_service");
+const fsService = require("./fs_service");
 
 let controller = {};
 
@@ -36,7 +37,9 @@ controller.process = (settings, callback) => {
                             "binary"
                         );
 
-                        images[aliases[index]] = newFilename;
+                        images[aliases[index]] = {
+                            key: newFilename
+                        }
 
                         cb();
                     } else {
@@ -44,7 +47,10 @@ controller.process = (settings, callback) => {
                             data: new Buffer(stdout, "binary"),
                             fileName: newFilename
                         }, (err, imageUrl) => {
-                            images[aliases[index]] = imageUrl;
+                            images[aliases[index]] = {
+                                url: imageUrl,
+                                key: newFilename
+                            }
                             cb();
                         });
                     }
@@ -56,6 +62,18 @@ controller.process = (settings, callback) => {
             callback(images);
         });
     });
+}
+
+controller.remove = (settings, callback) => {
+    if (settings.storage === "filesystem") {
+        fsService.destroy(settings, () => {
+            callback();
+        });
+    } else {
+        s3Service.destroy(settings, () => {
+            callback();
+        });
+    }
 }
 
 module.exports = controller;

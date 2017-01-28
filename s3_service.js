@@ -1,3 +1,4 @@
+const async = require("async");
 const AWS = require("aws-sdk");
 const s3 = new AWS.S3();
 
@@ -20,6 +21,27 @@ service.upload = (settings, callback) => {
         }, (error, url) => {
             return callback(err, service.stripUrl(url));
         });
+    });
+}
+
+service.destroy = (settings, callback) => {
+    let ops = [];
+
+    settings.keys.forEach((s3Key) => {
+        ops.push((cb) => {
+            console.log(`Photonify (S3) - Removing Key: ${s3Key}`);
+
+            s3.deleteObject({
+                Bucket: process.env.AWS_BUCKET_NAME,
+                Key: s3Key
+            }, (err, data) => {
+                cb(data);
+            });
+        });
+    });
+
+    async.parallel(ops, (result) => {
+        return callback(result);
     });
 }
 
