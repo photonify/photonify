@@ -18,7 +18,7 @@ helpers.generateFingerprint = () => {
 }
 
 helpers.generateFileName = (settings, features, index) => {
-    const fileSuffixes = ["-large", "-medium", "-small"];
+    const fileSuffixes = ["-large", "-medium", "-small", "-original"];
 
     if (settings.fingerprint) {
         var fingerprint = helpers.generateFingerprint();

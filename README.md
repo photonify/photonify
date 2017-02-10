@@ -32,7 +32,9 @@ const params = {
 	storage: "s3"
 };
 
-photonify.process(params, (images) => {
+photonify
+.process(params)
+.then((images) => {
 	res.status(201).json(images);
 });
 ```
@@ -58,7 +60,9 @@ const params = {
 	storage: "filesystem"
 };
 
-photonify.process(params, (images) => {
+photonify
+.process(params)
+.then((images) => {
 	res.status(201).json(images);
 });
 ```
@@ -93,7 +97,8 @@ Example:
 photonify.remove({
 	keys: [photo.photo_large_key, photo.photo_medium_key, photo.photo_small_key],
 	storage: "s3"
-}, (result) => {
+})
+.then((result) => {
 	photo
 	.destroy()
 	.then(() => {
@@ -122,7 +127,8 @@ photonify.remove({
 	keys: [photo.photo_large_key, photo.photo_medium_key, photo.photo_small_key],
 	storage: "filesystem",
 	source: __dirname + "/images"
-}, (result) => {
+})
+.then((result) => {
 	photo
 	.destroy()
 	.then(() => {

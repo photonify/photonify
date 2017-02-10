@@ -21,7 +21,8 @@ app.post("/s3_test", (req, res) => {
         fileName: req.files.photo.name,
         fingerprint: true,
         storage: "s3"
-    }, (images) => {
+    })
+    .then((images) => {
         res.status(201).json(images);
     });
 });
@@ -34,7 +35,8 @@ app.post("/filesystem_test", (req, res) => {
         dest: "./public/images",
         fingerprint: true,
         storage: "filesystem"
-    }, (images) => {
+    })
+    .then((images) => {
         res.status(201).json(images);
     });
 });
