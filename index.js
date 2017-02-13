@@ -26,9 +26,15 @@ controller.process = (settings) => {
             aliases.forEach((alias, index) => {
                 ops.push((cb) => {
                     if (sizes[index]) {
-                        var width = sizes[index].split("x")[0];
-                        var height = sizes[index].split("x")[1];
+                        var width = parseInt(sizes[index].split("x")[0]);
+                        var height = parseInt(sizes[index].split("x")[1]);
                     } else {
+                        var width = features.width;
+                        var height = features.height;
+                    }
+
+                    //Make sure width and height do not exceed original dimensions
+                    if (width > features.width || height > features.height) {
                         var width = features.width;
                         var height = features.height;
                     }
