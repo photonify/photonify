@@ -4,21 +4,23 @@ const path = require("path");
 
 let service = {};
 
-service.destroy = (settings, callback) => {
-    let ops = [];
+service.destroy = (settings) => {
+    return new Promise((resolve, reject) => {
+        let ops = [];
 
-    settings.keys.forEach((fsKey) => {
-        ops.push((cb) => {
-            console.log(`Photonify (Filesystem) - Removing Key: ${fsKey}`);
+        settings.keys.forEach((fsKey) => {
+            ops.push((cb) => {
+                console.log(`Photonify (Filesystem) - Removing Key: ${fsKey}`);
 
-            fs.unlink(path.join(settings.source, fsKey), () => {
-                cb();
+                fs.unlink(path.join(settings.source, fsKey), () => {
+                    cb();
+                });
             });
         });
-    });
 
-    async.parallel(ops, () => {
-        callback();
+        async.parallel(ops, () => {
+            resolve();
+        });
     });
 }
 

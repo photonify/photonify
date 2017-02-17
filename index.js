@@ -65,7 +65,8 @@ controller.process = (settings) => {
                             s3Service.upload({
                                 data: new Buffer(stdout, "binary"),
                                 fileName: newFilename
-                            }, (err, imageUrl) => {
+                            })
+                            .then((imageUrl) => {
                                 images[aliases[index]] = {
                                     url: imageUrl,
                                     key: newFilename
@@ -87,11 +88,15 @@ controller.process = (settings) => {
 controller.remove = (settings) => {
     return new Promise((resolve, reject) => {
         if (settings.storage === "filesystem") {
-            fsService.destroy(settings, () => {
+            fsService
+            .destroy(settings)
+            .then(() => {
                 resolve();
             });
         } else {
-            s3Service.destroy(settings, () => {
+            s3Service
+            .destroy(settings)
+            .then(() => {
                 resolve();
             });
         }
