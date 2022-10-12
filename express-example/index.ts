@@ -1,16 +1,19 @@
-const express = require("express");
-const fileUpload = require("express-fileupload");
+import express from "express";
+import fileUpload from "express-fileupload";
+import dotenv from "dotenv";
+import path from "path";
+// import photonify from "../dist/index";
 
 let app = express();
 
 //Configure dotenv to set environment variables
-require("dotenv").config();
+dotenv.config();
 
 //Use the plugin express-fileupload. This plugin simply adds a "files" property to req.
 app.use(fileUpload());
 
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
+  res.sendFile(path.join(process.cwd(), "index.html"));
 });
 
 //Test using S3 storage
