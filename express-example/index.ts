@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import path from "path";
 // import photonify from "../dist/index";
 
-let app = express();
+const app = express();
 
 //Configure dotenv to set environment variables
 dotenv.config();
