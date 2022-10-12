@@ -1,22 +1,15 @@
 {
-    "name": "photonify",
-    "version": "1.0.9",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/arsood/photonify.git"
-    },
-    "description": "Photonify is a utility to manage multipart image uploads and automatically process them with Imagemagick.",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "Arun Sood",
-    "license": "ISC",
-    "dependencies": {
-        "async": "^2.1.4",
-        "aws-sdk": "^2.7.27",
-        "imagemagick": "^0.1.3",
-        "node-uuid": "^1.4.7",
-        "slug": "^0.9.1"
-    }
+  "name": "photonify",
+  "version": "3.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arsood/photonify.git"
+  },
+  "description": "Photonify is a utility to manage multipart image uploads and automatically process them with fingerprinting and storage.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Arun Sood",
+  "license": "ISC"
 }

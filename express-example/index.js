@@ -1,5 +1,4 @@
 const express = require("express");
-const photonify = require("photonify");
 const fileUpload = require("express-fileupload");
 
 let app = express();
@@ -11,34 +10,17 @@ require("dotenv").config();
 app.use(fileUpload());
 
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/index.html");
+  res.sendFile(__dirname + "/index.html");
 });
 
 //Test using S3 storage
-app.post("/s3_test", (req, res) => {
-    photonify.process({
-        data: req.files.photo.data,
-        fileName: req.files.photo.name,
-        fingerprint: true,
-        storage: "s3"
-    })
-    .then((images) => {
-        res.status(201).json(images);
-    });
-});
+app.post("/s3_test", (req, res) => {});
 
 //Test using filesystem storage
-app.post("/filesystem_test", (req, res) => {
-    photonify.process({
-        data: req.files.photo.data,
-        fileName: req.files.photo.name,
-        dest: "./public/images",
-        fingerprint: true,
-        storage: "filesystem"
-    })
-    .then((images) => {
-        res.status(201).json(images);
-    });
-});
+app.post("/filesystem_test", (req, res) => {});
 
-app.listen(9000);
+const PORT = 9000;
+
+app.listen(PORT, () => {
+  console.log(`Server start on port ${PORT}...`);
+});
