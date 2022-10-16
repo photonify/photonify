@@ -25,4 +25,4 @@ export type Settings = {
 
 export type Files = Buffer | Buffer[];
 
-export type SupportedFileTypes = ["jpg", "png", "tiff"];
+export type SupportedFileTypes = "jpg" | "png" | "tiff";
