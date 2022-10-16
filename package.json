@@ -8,7 +8,7 @@
   "description": "Photonify is a utility to manage multipart image uploads and automatically process them with fingerprinting and storage.",
   "main": "dist/index.js",
   "scripts": {
-    "test": "mocha --require ts-node/register test/**/*.test.ts --exit",
+    "test": "mocha --require ts-node/register test/**/*.test.ts --exit --timeout=10000",
     "build": "tsc"
   },
   "author": "Arun Sood",
