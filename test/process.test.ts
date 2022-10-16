@@ -11,7 +11,7 @@ describe("Function: Process", () => {
     );
 
     photonify.process([image1], {
-      fileName: "first_image.jpg",
+      outputDest: path.join(__dirname, "tmp_resized_images"),
       sizes: {
         lg: {
           width: 500,

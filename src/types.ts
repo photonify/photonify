@@ -18,9 +18,9 @@ export type Sizes = {
 };
 
 export type Settings = {
-  fileName: string;
+  outputDest: string;
+  outputFormat?: SupportedFileTypes;
   sizes?: Sizes;
-  fingerprint?: boolean;
 };
 
 export type Files = Buffer | Buffer[];
