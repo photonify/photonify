@@ -68,4 +68,27 @@ describe("Function: Process", () => {
       fs.unlinkSync(newFilePath);
     });
   });
+
+  it("Should call the process function with one image, standard sizes, and S3 storage", async () => {
+    const image1 = fs.readFileSync(
+      path.join(__dirname, "test_images/first_image.jpg")
+    );
+
+    const result = await photonify.process([image1], {
+      storage: "s3",
+    });
+
+    result.createdFiles.forEach((createdFile: string) => {
+      const newFilePath = path.join(
+        process.cwd(),
+        "tmp_for_upload",
+        createdFile
+      );
+
+      expect(fs.existsSync(newFilePath)).to.be.true;
+
+      // Delete temp file after spec is run
+      fs.unlinkSync(newFilePath);
+    });
+  });
 });

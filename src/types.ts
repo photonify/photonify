@@ -18,7 +18,8 @@ export type Sizes = {
 };
 
 export type Settings = {
-  outputDest: string;
+  outputDest?: string;
+  storage?: "local" | "s3";
   outputFormat?: SupportedFileTypes;
   sizes?: Sizes;
 };
