@@ -82,17 +82,6 @@ describe("Function: Process", () => {
       s3Bucket: "photonify",
     });
 
-    result.createdFiles.forEach((createdFile: string) => {
-      const newFilePath = path.join(
-        process.cwd(),
-        "tmp_for_upload",
-        createdFile
-      );
-
-      expect(fs.existsSync(newFilePath)).to.be.true;
-
-      // Delete temp file after spec is run
-      fs.unlinkSync(newFilePath);
-    });
+    expect(result.createdFiles.length).to.equal(4);
   });
 });

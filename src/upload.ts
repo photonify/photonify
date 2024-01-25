@@ -19,6 +19,8 @@ export async function upload(
 
   try {
     await client.send(command);
+    // Delete temp file after upload completes
+    fs.unlinkSync(pathToFile);
     console.log(`Photonify S3 Upload: ${newFileName}`);
   } catch (err) {
     console.error("Photonify: S3 error");
