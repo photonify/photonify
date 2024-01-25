@@ -109,7 +109,9 @@ describe("Function: Process", () => {
       s3Bucket: "photonify",
     });
 
-    result.createdFiles.forEach(async (createdFile: string) => {
+    const removeOps: any[] = [];
+
+    result.createdFiles.forEach((createdFile: string) => {
       const newFilePath = path.join(
         __dirname,
         "../tmp_for_upload",
@@ -118,17 +120,22 @@ describe("Function: Process", () => {
 
       expect(fs.existsSync(newFilePath)).to.be.true;
 
-      await photonify.remove(createdFile, {
-        s3Config: {
-          region: "us-west-1",
-        },
-        s3Bucket: "photonify",
-      });
+      removeOps.push(
+        photonify.remove(createdFile, {
+          storage: "s3",
+          s3Config: {
+            region: "us-west-1",
+          },
+          s3Bucket: "photonify",
+        })
+      );
 
       // Delete temp file after spec is run
       fs.unlinkSync(newFilePath);
 
       expect(fs.existsSync(newFilePath)).to.be.false;
     });
+
+    await Promise.all(removeOps);
   });
 });
