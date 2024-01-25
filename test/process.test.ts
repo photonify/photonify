@@ -76,7 +76,9 @@ describe("Function: Process", () => {
 
     const result = await photonify.process([image1], {
       storage: "s3",
-      s3Region: "us-west-1",
+      s3Config: {
+        region: "us-west-1",
+      },
     });
 
     result.createdFiles.forEach((createdFile: string) => {

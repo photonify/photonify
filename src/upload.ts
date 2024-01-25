@@ -9,9 +9,7 @@ export async function upload(
 ) {
   const file = fs.readFileSync(pathToFile);
 
-  const client = new S3Client({
-    region: settings.s3Region,
-  });
+  const client = new S3Client(settings.s3Config);
 
   const command = new PutObjectCommand({
     Bucket: "outlet",

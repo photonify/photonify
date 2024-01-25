@@ -22,7 +22,7 @@ export type Settings = {
   storage?: "local" | "s3";
   outputFormat?: SupportedFileTypes;
   sizes?: Sizes;
-  s3Region?: string;
+  s3Config?: any;
 };
 
 export type Files = Buffer | Buffer[];
