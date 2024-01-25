@@ -56,7 +56,7 @@ function processFiles(files, settings) {
             };
         }
         catch (e) {
-            console.log(e);
+            console.error(e);
             throw new Error("Photonify: Error processing images");
         }
     });
