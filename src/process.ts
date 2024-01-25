@@ -35,7 +35,13 @@ export async function process(files: Files, settings: Settings) {
           .toFile(path.join(outputDest, newFileName))
           .then(() => {
             if (settings.storage === "s3") {
-              ops.push(upload(path.join(outputDest, newFileName)));
+              ops.push(
+                upload(
+                  settings,
+                  path.join(outputDest, newFileName),
+                  newFileName
+                )
+              );
             }
           })
       );
