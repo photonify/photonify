@@ -21,29 +21,6 @@ yarn add photonify
 - Photonify has a method called "processFiles" that will create four resized photos for you by default. The arguments passed to this method will differ slightly depending on filesystem vs. S3 storage.
 - Both examples are below:
 
-#### S3 Storage:
-
-Parameters:
-
-- storage: _String - Required_
-- s3Config: _any - Required_ [details here](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/)
-- s3Bucket: _String - Required_
-- outputFormat: _String_
-
-Example:
-
-```javascript
-const imageBuffer = req.file.buffer;
-
-const result = await photonify.processFiles([imageBuffer], {
-  storage: "s3",
-  s3Config: {
-    region: "us-west-1",
-  },
-  s3Bucket: "photonify",
-});
-```
-
 #### Filesystem Storage:
 
 Parameters:
@@ -72,10 +49,33 @@ const result = await photonify.processFiles([imageBuffer], {
 });
 ```
 
+#### S3 Storage:
+
+Parameters:
+
+- storage: _String - Required_
+- s3Config: _any - Required_ [details here](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/)
+- s3Bucket: _String - Required_
+- outputFormat: _String_
+
+Example:
+
+```javascript
+const imageBuffer = req.file.buffer;
+
+const result = await photonify.processFiles([imageBuffer], {
+  storage: "s3",
+  s3Config: {
+    region: "us-west-1",
+  },
+  s3Bucket: "photonify",
+});
+```
+
 ## Removing Files
 
 - Photonify has support for removing files from S3
-- Note: No support for local filesystem removal is added to Photonify. You are encouraged instead to use the built-in fs.unlink command instead.
+- Note: No support for local filesystem removal is added to Photonify. You are encouraged instead to use the built-in [fs.unlink](https://nodejs.org/api/fs.html#fspromisesunlinkpath) command instead.
 
 #### Removing S3 Files:
 
