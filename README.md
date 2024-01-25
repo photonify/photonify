@@ -25,6 +25,7 @@ yarn add photonify
 
 Parameters:
 
+- File Array: _Buffer[] - Required_
 - outputDest: _String - Required_
 - outputFormat: _String_
 - sizes: _String_
@@ -53,6 +54,7 @@ const result = await photonify.processFiles([imageBuffer], {
 
 Parameters:
 
+- File Array: _Buffer[] - Required_
 - storage: _String - Required_
 - s3Config: _any - Required_ [details here](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/)
 - s3Bucket: _String - Required_
@@ -86,6 +88,7 @@ const result = await photonify.processFiles([imageBuffer], {
 
 Parameters:
 
+- File Name: _String - Required_
 - storage: _String - Required_
 - s3Config: _any - Required_ [details here](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/)
 - s3Bucket: _String - Required_
