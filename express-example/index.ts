@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import path from "path";
 import multer from "multer";
-// import photonify from "../dist/index";
+import photonify from "../dist/src/index";
 
 const app = express();
 
@@ -16,7 +16,17 @@ app.get("/", (req, res) => {
 });
 
 //Test using filesystem storage
-app.post("/filesystem_test", upload.single("photo"), (req, res) => {});
+app.post("/filesystem_test", upload.single("photo"), async (req, res) => {
+  if (req.file) {
+    const result = await photonify.processFiles(req.file.buffer, {
+      outputDest: path.join(__dirname, "tmp_resized_images"),
+    });
+
+    return res.status(201).json({ createdFiles: result.createdFiles });
+  }
+
+  res.sendStatus(400);
+});
 
 //Test using S3 storage
 app.post("/s3_test", (req, res) => {});
