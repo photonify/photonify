@@ -23,8 +23,8 @@ export async function remove(fileName: string, settings: Partial<Settings>) {
   try {
     await client.send(command);
     console.log(`Photonify S3 Delete: ${fileName}`);
-  } catch (err) {
-    console.error("Photonify: S3 delete error");
-    console.error(err);
+  } catch (e) {
+    console.error(e);
+    throw new Error("Photonify: S3 delete error");
   }
 }

@@ -62,7 +62,7 @@ export async function processFiles(files: Files, settings: Settings) {
       createdFiles,
     };
   } catch (e) {
-    console.log(e);
+    console.error(e);
     throw new Error("Photonify: Error processing images");
   }
 }
