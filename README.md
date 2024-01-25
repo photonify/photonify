@@ -82,7 +82,7 @@ const result = await photonify.processFiles([imageBuffer], {
 ## Removing Files
 
 - Photonify has support for removing files from S3
-- Note: No support for local filesystem removal is added to Photonify. You are encouraged instead to use the built-in [fs.unlink](https://nodejs.org/api/fs.html#fspromisesunlinkpath) command instead.
+- Note: No support for local filesystem removal is added to Photonify. You are encouraged to use the built-in [fs.unlink](https://nodejs.org/api/fs.html#fspromisesunlinkpath) method instead.
 
 #### Removing S3 Files:
 
