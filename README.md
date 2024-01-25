@@ -1,41 +1,46 @@
 # Photonify
 
-Photonify is a utility to manage multipart image uploads and automatically process them with Imagemagick. The plugin also supports S3 uploads.
+Photonify is a utility to manage image uploads and automatically process them into fingerprinted files. The plugin also supports S3 uploads.
 
 ## Installation
+
+#### NPM
 
 ```bash
 npm install photonify
 ```
 
+#### Yarn
+
+```bash
+yarn add photonify
+```
+
 ## Usage
 
-- Photonify has a method called "process" that will create three resized photos for you. The arguments passed to this method will differ slightly depending on filesystem vs. S3 storage.
+- Photonify has a method called "processFiles" that will create four resized photos for you by default. The arguments passed to this method will differ slightly depending on filesystem vs. S3 storage.
 - Both examples are below:
 
 #### S3 Storage:
 
 Parameters:
 
-- data: *Buffer - Required*
-- fileName: *String - Required*
-- fingerprint: *Boolean*
-- storage: *String*
+- storage: _String - Required_
+- s3Config: _any - Required_ [details here](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/)
+- s3Bucket: _String - Required_
+- outputFormat: _String_
 
 Example:
 
 ```javascript
-const params = {
-	data: req.files.photo.data,
-	fileName: req.files.photo.name,
-	fingerprint: true,
-	storage: "s3"
-};
+const imageBuffer = req.file.buffer;
 
-photonify
-.process(params)
-.then((images) => {
-	res.status(201).json(images);
+const result = await photonify.processFiles([imageBuffer], {
+  storage: "s3",
+  s3Config: {
+    region: "us-west-1",
+  },
+  s3Bucket: "photonify",
 });
 ```
 
@@ -43,106 +48,56 @@ photonify
 
 Parameters:
 
-- data: *Buffer - Required*
-- fileName: *String - Required*
-- dest: *String - Required*
-- fingerprint: *Boolean*
-- storage: *String*
+- outputDest: _String - Required_
+- outputFormat: _String_
+- sizes: _String_
 
-Example:
+Example with Custom Sizes:
 
 ```javascript
-const params = {
-	data: req.files.photo.data,
-	fileName: req.files.photo.name,
-	dest: "./public/images",
-	fingerprint: true,
-	storage: "filesystem"
-};
+const imageBuffer = req.file.buffer;
 
-photonify
-.process(params)
-.then((images) => {
-	res.status(201).json(images);
+const result = await photonify.processFiles([imageBuffer], {
+  outputDest: path.join(__dirname, "resized_images"),
+  sizes: {
+    lg: {
+      width: 500,
+      height: 250,
+    },
+    md: {
+      width: 250,
+      height: 125,
+    },
+  },
 });
 ```
 
-## Using S3
-
-- Note: If you want to use S3 the plugin makes the assumption that you have the following three environment variables set up:
-
-```javascript
-AWS_ACCESS_KEY_ID
-AWS_SECRET_ACCESS_KEY
-AWS_BUCKET_NAME
-```
-
-- You can read more about getting these values from the [AWS access keys documentation](http://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html).
-- A good plugin for setting up these environment variables is called [dotenv](https://www.npmjs.com/package/dotenv).
-
 ## Removing Files
 
-- Photonify has support for removing files from the filesystem or S3 as well.
+- Photonify has support for removing files from S3
+- Note: No support for local filesystem removal is added to Photonify. You are encouraged instead to use the built-in fs.unlink command instead.
 
 #### Removing S3 Files:
 
 Parameters:
 
-- keys: *Array - Required*
-- storage: *String - Required*
+- storage: _String - Required_
+- s3Config: _any - Required_ [details here](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/)
+- s3Bucket: _String - Required_
 
 Example:
 
 ```javascript
-photonify.remove({
-	keys: [photo.photo_large_key, photo.photo_medium_key, photo.photo_small_key],
-	storage: "s3"
-})
-.then((result) => {
-	photo
-	.destroy()
-	.then(() => {
-		res.sendStatus(200);
-	})
-	.catch((err) => {
-		res
-		.status(400)
-		.json(err);
-	});
-});
-```
-
-#### Removing Filesystem Files:
-
-Parameters:
-
-- keys: *Array - Required*
-- storage: *String - Required*
-- source: *String - Required*
-
-Example:
-
-```javascript
-photonify.remove({
-	keys: [photo.photo_large_key, photo.photo_medium_key, photo.photo_small_key],
-	storage: "filesystem",
-	source: __dirname + "/images"
-})
-.then((result) => {
-	photo
-	.destroy()
-	.then(() => {
-		res.sendStatus(200);
-	})
-	.catch((err) => {
-		res
-		.status(400)
-		.json(err);
-	});
+await photonify.remove("somefile.jpg", {
+  storage: "s3",
+  s3Config: {
+    region: "us-west-1",
+  },
+  s3Bucket: "photonify",
 });
 ```
 
 ## Example App
 
-- You can see a working example application that uses express [here](express-example/).
-- This example uses the [express-fileupload](https://www.npmjs.com/package/express-fileupload) plugin to access multipart file data.
+- You can see a working example application that uses Express JS [here](https://github.com/photonify/photonify-express-example).
+- This example uses the [Multer](https://github.com/expressjs/multer) plugin to access multipart file data.
