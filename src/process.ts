@@ -7,6 +7,13 @@ import { DEFAULT_SIZES } from "./constants";
 import { upload } from "./upload";
 
 export async function process(files: Files, settings: Settings) {
+  // Fail early if S3 is selected but not configured
+  if (settings.storage === "s3" && (!settings.s3Config || !settings.s3Bucket)) {
+    throw new Error(
+      "Photonify: S3 storage is selected but s3Config or s3Bucket is not set."
+    );
+  }
+
   const sizes = settings.sizes || DEFAULT_SIZES;
   const outputFormat = settings.outputFormat || "jpg";
   const outputDest =
