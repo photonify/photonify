@@ -18,9 +18,8 @@ export async function upload(
   });
 
   try {
-    const response = await client.send(command);
+    await client.send(command);
     console.log(`Photonify S3 Upload: ${newFileName}`);
-    console.log(response);
   } catch (err) {
     console.error("Photonify: S3 error");
     console.error(err);
