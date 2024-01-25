@@ -18,7 +18,7 @@ yarn add photonify
 
 ## Usage
 
-- Photonify has a method called "processFiles" that will create four resized photos for you by default. The arguments passed to this method will differ slightly depending on filesystem vs. S3 storage.
+- Photonify has a method called `processFiles` that will create four resized photos for you by default. The arguments passed to this method will differ slightly depending on filesystem vs. S3 storage.
 - Both examples are below:
 
 #### Filesystem Storage:
@@ -71,6 +71,10 @@ const result = await photonify.processFiles([imageBuffer], {
   s3Bucket: "photonify",
 });
 ```
+
+## Photonify Uses Sharp
+
+- Under the hood, Photonify uses Sharp to process images: https://github.com/lovell/sharp
 
 ## Removing Files
 
