@@ -12,7 +12,7 @@ export async function upload(
   const client = new S3Client(settings.s3Config);
 
   const command = new PutObjectCommand({
-    Bucket: "outlet",
+    Bucket: settings.s3Bucket,
     Key: newFileName,
     Body: file,
   });

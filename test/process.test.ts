@@ -79,6 +79,7 @@ describe("Function: Process", () => {
       s3Config: {
         region: "us-west-1",
       },
+      s3Bucket: "photonify",
     });
 
     result.createdFiles.forEach((createdFile: string) => {

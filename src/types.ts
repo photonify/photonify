@@ -23,6 +23,7 @@ export type Settings = {
   outputFormat?: SupportedFileTypes;
   sizes?: Sizes;
   s3Config?: any;
+  s3Bucket?: string;
 };
 
 export type Files = Buffer | Buffer[];
