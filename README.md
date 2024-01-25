@@ -75,6 +75,7 @@ const result = await photonify.processFiles([imageBuffer], {
 ## Photonify Uses Sharp
 
 - Under the hood, Photonify uses Sharp to process images: https://github.com/lovell/sharp
+- Sharp may require additional setup steps for your specific environment. See [this documentation](https://sharp.pixelplumbing.com/install#cross-platform) for more details.
 
 ## Removing Files
 
