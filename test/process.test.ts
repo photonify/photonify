@@ -95,4 +95,40 @@ describe("Function: Process", () => {
       fs.unlinkSync(newFilePath);
     });
   });
+
+  it("Should call the remove function with one image, standard sizes, and S3 storage", async () => {
+    const image1 = fs.readFileSync(
+      path.join(__dirname, "test_images/first_image.jpg")
+    );
+
+    const result = await photonify.processFiles([image1], {
+      storage: "s3",
+      s3Config: {
+        region: "us-west-1",
+      },
+      s3Bucket: "photonify",
+    });
+
+    result.createdFiles.forEach(async (createdFile: string) => {
+      const newFilePath = path.join(
+        __dirname,
+        "../tmp_for_upload",
+        createdFile
+      );
+
+      expect(fs.existsSync(newFilePath)).to.be.true;
+
+      await photonify.remove(createdFile, {
+        s3Config: {
+          region: "us-west-1",
+        },
+        s3Bucket: "photonify",
+      });
+
+      // Delete temp file after spec is run
+      fs.unlinkSync(newFilePath);
+
+      expect(fs.existsSync(newFilePath)).to.be.false;
+    });
+  });
 });
