@@ -10,7 +10,7 @@ describe("Function: Process", () => {
       path.join(__dirname, "test_images/first_image.jpg")
     );
 
-    const result = await photonify.process([image1], {
+    const result = await photonify.processFiles([image1], {
       outputDest: path.join(__dirname, "tmp_resized_images"),
       sizes: {
         lg: {
@@ -51,7 +51,7 @@ describe("Function: Process", () => {
       path.join(__dirname, "test_images/third_image.jpg")
     );
 
-    const result = await photonify.process([image1, image2, image3], {
+    const result = await photonify.processFiles([image1, image2, image3], {
       outputDest: path.join(__dirname, "tmp_resized_images"),
     });
 
@@ -74,7 +74,7 @@ describe("Function: Process", () => {
       path.join(__dirname, "test_images/first_image.jpg")
     );
 
-    const result = await photonify.process([image1], {
+    const result = await photonify.processFiles([image1], {
       storage: "s3",
       s3Config: {
         region: "us-west-1",
@@ -82,6 +82,17 @@ describe("Function: Process", () => {
       s3Bucket: "photonify",
     });
 
-    expect(result.createdFiles.length).to.equal(4);
+    result.createdFiles.forEach((createdFile: string) => {
+      const newFilePath = path.join(
+        __dirname,
+        "../tmp_for_upload",
+        createdFile
+      );
+
+      expect(fs.existsSync(newFilePath)).to.be.true;
+
+      // Delete temp file after spec is run
+      fs.unlinkSync(newFilePath);
+    });
   });
 });

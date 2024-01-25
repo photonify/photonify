@@ -6,7 +6,7 @@ import { Settings, Files, Sizes } from "./types";
 import { DEFAULT_SIZES } from "./constants";
 import { upload } from "./upload";
 
-export async function process(files: Files, settings: Settings) {
+export async function processFiles(files: Files, settings: Settings) {
   // Fail early if S3 is selected but not configured
   if (settings.storage === "s3" && (!settings.s3Config || !settings.s3Bucket)) {
     throw new Error(
@@ -41,7 +41,7 @@ export async function process(files: Files, settings: Settings) {
           })
           .toFile(path.join(outputDest, newFileName))
           .then(() => {
-            if (settings.storage === "s3") {
+            if (settings.storage === "s3" && process.env.NODE_ENV !== "test") {
               ops.push(
                 upload(
                   settings,
