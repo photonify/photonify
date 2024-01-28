@@ -33,9 +33,11 @@ Parameters:
 Example with Custom Sizes:
 
 ```javascript
+import { processFiles } from "photonify";
+
 const imageBuffer = req.file.buffer;
 
-const result = await photonify.processFiles([imageBuffer], {
+const result = await processFiles([imageBuffer], {
   outputDest: path.join(__dirname, "resized_images"),
   sizes: {
     lg: {
@@ -63,9 +65,11 @@ Parameters:
 Example:
 
 ```javascript
+import { processFiles } from "photonify";
+
 const imageBuffer = req.file.buffer;
 
-const result = await photonify.processFiles([imageBuffer], {
+const result = await processFiles([imageBuffer], {
   storage: "s3",
   s3Config: {
     region: "us-west-1",
@@ -96,7 +100,9 @@ Parameters:
 Example:
 
 ```javascript
-await photonify.remove(["file1.jpg", "file2.jpg], {
+import { removeFiles } from "photonify";
+
+await removeFiles(["file1.jpg", "file2.jpg"], {
   storage: "s3",
   s3Config: {
     region: "us-west-1",
