@@ -88,7 +88,7 @@ const result = await photonify.processFiles([imageBuffer], {
 
 Parameters:
 
-- File Name: _String - Required_
+- File Names: _String[] - Required_
 - storage: _String - Required_
 - s3Config: _any - Required_ [details here](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/)
 - s3Bucket: _String - Required_
@@ -96,7 +96,7 @@ Parameters:
 Example:
 
 ```javascript
-await photonify.remove("somefile.jpg", {
+await photonify.remove(["file1.jpg", "file2.jpg], {
   storage: "s3",
   s3Config: {
     region: "us-west-1",
