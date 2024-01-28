@@ -96,7 +96,7 @@ describe("Function: Process", () => {
     });
   });
 
-  it("Should call the removeFiles function with one image, standard sizes, and S3 storage", async () => {
+  it("Should call the removeFiles function with multiple images, standard sizes, and S3 storage", async () => {
     const image1 = fs.readFileSync(
       path.join(__dirname, "test_images/first_image.jpg")
     );
