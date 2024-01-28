@@ -2,7 +2,7 @@ import { expect } from "chai";
 import fs from "fs";
 import path from "path";
 
-import photonify from "../src/index";
+import { processFiles, removeFiles } from "../src/index";
 
 describe("Function: Process", () => {
   it("Should call the process function with one image and custom sizes", async () => {
@@ -10,7 +10,7 @@ describe("Function: Process", () => {
       path.join(__dirname, "test_images/first_image.jpg")
     );
 
-    const result = await photonify.processFiles([image1], {
+    const result = await processFiles([image1], {
       outputDest: path.join(__dirname, "tmp_resized_images"),
       sizes: {
         lg: {
@@ -51,7 +51,7 @@ describe("Function: Process", () => {
       path.join(__dirname, "test_images/third_image.jpg")
     );
 
-    const result = await photonify.processFiles([image1, image2, image3], {
+    const result = await processFiles([image1, image2, image3], {
       outputDest: path.join(__dirname, "tmp_resized_images"),
     });
 
@@ -74,7 +74,7 @@ describe("Function: Process", () => {
       path.join(__dirname, "test_images/first_image.jpg")
     );
 
-    const result = await photonify.processFiles([image1], {
+    const result = await processFiles([image1], {
       storage: "s3",
       s3Config: {
         region: "us-west-1",
@@ -101,7 +101,7 @@ describe("Function: Process", () => {
       path.join(__dirname, "test_images/first_image.jpg")
     );
 
-    const result = await photonify.processFiles([image1], {
+    const result = await processFiles([image1], {
       storage: "s3",
       s3Config: {
         region: "us-west-1",
@@ -109,7 +109,7 @@ describe("Function: Process", () => {
       s3Bucket: "photonify",
     });
 
-    await photonify.removeFiles(result.createdFiles, {
+    await removeFiles(result.createdFiles, {
       storage: "s3",
       s3Config: {
         region: "us-west-1",

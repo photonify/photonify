@@ -1,7 +1,2 @@
-import { processFiles } from "./process_files";
-import { removeFiles } from "./remove_files";
-
-export default {
-  processFiles,
-  removeFiles,
-};
+export { processFiles } from "./process_files";
+export { removeFiles } from "./remove_files";
