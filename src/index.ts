@@ -1,7 +1,7 @@
 import { processFiles } from "./process_files";
-import { remove } from "./remove";
+import { removeFiles } from "./remove_files";
 
 export default {
   processFiles,
-  remove,
+  removeFiles,
 };
