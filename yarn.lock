@@ -684,13 +684,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@faker-js/faker@npm:^8.3.1":
-  version: 8.3.1
-  resolution: "@faker-js/faker@npm:8.3.1"
-  checksum: ed50c27a5674a8c755574ccc0c79c29fa70cd17d524b701269f584d2f78720c690da219f6111b0e743a4f6570fb08685d826b2d9e80ca9c1484b8c26047864c6
-  languageName: node
-  linkType: hard
-
 "@img/sharp-darwin-arm64@npm:0.33.2":
   version: 0.33.2
   resolution: "@img/sharp-darwin-arm64@npm:0.33.2"
@@ -2717,7 +2710,6 @@ __metadata:
   resolution: "photonify@workspace:."
   dependencies:
     "@aws-sdk/client-s3": "npm:^3.499.0"
-    "@faker-js/faker": "npm:^8.3.1"
     "@types/chai": "npm:4.3.11"
     "@types/mocha": "npm:10.0.6"
     "@types/node": "npm:^20.11.6"

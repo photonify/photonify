@@ -15,7 +15,6 @@
   "author": "Arun Sood",
   "license": "ISC",
   "devDependencies": {
-    "@faker-js/faker": "^8.3.1",
     "@types/chai": "4.3.11",
     "@types/mocha": "10.0.6",
     "@types/node": "^20.11.6",
