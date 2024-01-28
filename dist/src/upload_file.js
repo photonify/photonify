@@ -8,39 +8,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.removeFiles = void 0;
+exports.uploadFile = void 0;
+const fs_1 = __importDefault(require("fs"));
 const client_s3_1 = require("@aws-sdk/client-s3");
-function removeFiles(fileNames, settings) {
+function uploadFile(settings, pathToFile, newFileName) {
     return __awaiter(this, void 0, void 0, function* () {
-        if (settings.storage !== "s3" || !settings.s3Config || !settings.s3Bucket) {
-            throw new Error("Photonify: Storage must be set to S3 and have s3Config and s3Bucket configured.");
-        }
-        if (process.env.NODE_ENV === "test") {
-            return;
-        }
+        const file = fs_1.default.readFileSync(pathToFile);
         const client = new client_s3_1.S3Client(settings.s3Config);
-        const deleteObjects = fileNames.map((fileName) => {
-            return {
-                Key: fileName,
-            };
-        });
-        const command = new client_s3_1.DeleteObjectsCommand({
+        const command = new client_s3_1.PutObjectCommand({
             Bucket: settings.s3Bucket,
-            Delete: {
-                Objects: deleteObjects,
-            },
+            Key: newFileName,
+            Body: file,
         });
         try {
             yield client.send(command);
-            fileNames.forEach((fileName) => {
-                console.log(`Photonify S3 Delete: ${fileName}`);
-            });
+            // Delete temp file after upload completes
+            fs_1.default.unlinkSync(pathToFile);
+            console.log(`Photonify S3 Upload: ${newFileName}`);
         }
-        catch (e) {
-            console.error(e);
-            throw new Error("Photonify: S3 delete error");
+        catch (err) {
+            console.error("Photonify: S3 error");
+            console.error(err);
         }
     });
 }
-exports.removeFiles = removeFiles;
+exports.uploadFile = uploadFile;

@@ -1,8 +1,3 @@
-import { processFiles } from "./process_files";
-import { removeFiles } from "./remove_files";
-declare const _default: {
-    processFiles: typeof processFiles;
-    removeFiles: typeof removeFiles;
-};
-export default _default;
+export { processFiles } from "./process_files";
+export { removeFiles } from "./remove_files";
 //# sourceMappingURL=index.d.ts.map

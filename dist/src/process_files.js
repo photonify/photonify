@@ -17,7 +17,7 @@ const path_1 = __importDefault(require("path"));
 const sharp_1 = __importDefault(require("sharp"));
 const uuid_1 = require("uuid");
 const constants_1 = require("./constants");
-const upload_1 = require("./upload");
+const upload_file_1 = require("./upload_file");
 function processFiles(files, settings) {
     return __awaiter(this, void 0, void 0, function* () {
         // Fail early if S3 is selected but not configured
@@ -44,7 +44,7 @@ function processFiles(files, settings) {
                     .toFile(path_1.default.join(outputDest, newFileName))
                     .then(() => {
                     if (settings.storage === "s3" && process.env.NODE_ENV !== "test") {
-                        ops.push((0, upload_1.upload)(settings, path_1.default.join(outputDest, newFileName), newFileName));
+                        ops.push((0, upload_file_1.uploadFile)(settings, path_1.default.join(outputDest, newFileName), newFileName));
                     }
                 }));
             });
