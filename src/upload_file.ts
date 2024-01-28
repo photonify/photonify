@@ -2,7 +2,7 @@ import fs from "fs";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { Settings } from "./types";
 
-export async function upload(
+export async function uploadFile(
   settings: Settings,
   pathToFile: string,
   newFileName: string
@@ -19,8 +19,10 @@ export async function upload(
 
   try {
     await client.send(command);
+
     // Delete temp file after upload completes
     fs.unlinkSync(pathToFile);
+
     console.log(`Photonify S3 Upload: ${newFileName}`);
   } catch (err) {
     console.error("Photonify: S3 error");

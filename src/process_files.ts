@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { Settings, Files, Sizes } from "./types";
 import { DEFAULT_SIZES } from "./constants";
-import { upload } from "./upload";
+import { uploadFile } from "./upload_file";
 
 export async function processFiles(files: Files, settings: Settings) {
   // Fail early if S3 is selected but not configured
@@ -43,7 +43,7 @@ export async function processFiles(files: Files, settings: Settings) {
           .then(() => {
             if (settings.storage === "s3" && process.env.NODE_ENV !== "test") {
               ops.push(
-                upload(
+                uploadFile(
                   settings,
                   path.join(outputDest, newFileName),
                   newFileName

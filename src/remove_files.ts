@@ -32,13 +32,11 @@ export async function removeFiles(
   });
 
   try {
-    const result = await client.send(command);
+    await client.send(command);
 
     fileNames.forEach((fileName) => {
       console.log(`Photonify S3 Delete: ${fileName}`);
     });
-
-    return result;
   } catch (e) {
     console.error(e);
     throw new Error("Photonify: S3 delete error");
